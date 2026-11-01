@@ -1,0 +1,23 @@
+int ft_printf(const char *str, ...);
+#include <stdio.h>
+int main()
+{
+    char a = 'a';
+    char *b = "akram454 45345 hello sdsdasd dasdas";
+    int l = 234;
+    char *j = "hello";
+    char **d = &j;
+    int count;
+    int k = 1;
+    // close(1);
+    setvbuf(stdout, NULL, _IONBF, 0);
+    count = printf("%p %s %c %d\n",d, b, a, l);
+    printf("%d\n", count);
+    dprintf(2, "%d\n", count);
+    printf("\n");
+    count = ft_printf("%p %s %c %d\n",d, b, a, l);
+    printf("%d\n", count);
+
+    dprintf(2, "%d\n", count);
+    return 0;
+}
