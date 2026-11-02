@@ -18,7 +18,7 @@ int ft_putstr(char *s)
     size_t tool;
 
     if (!s)
-        return (0);
+        return (write(1, "(null)", 6));
     tool = ft_strlen(s);
     if (write(1, s, tool) == -1)
         return (-1);

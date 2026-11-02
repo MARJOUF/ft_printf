@@ -9,13 +9,14 @@ int main()
     char *d = &j;
     int count;
     int k = 1;
+    unsigned int o = -20;
     // close(1);
     setvbuf(stdout, NULL, _IONBF, 0);
-    count = printf("%s %c %d %p\n",b, a, l, d);
+    count = printf("%s %c %d %p %i %u\n",b, a, l, d, k, o);
     printf("%d\n", count);
     dprintf(2, "%d\n", count);
     printf("\n");
-    count = ft_printf("%s %c %d %p\n",b, a, l, d);
+    count = ft_printf("%s %c %d %p %i %u\n",b, a, l, d, k, o);
     printf("%d\n", count);
 
     dprintf(2, "%d\n", count);

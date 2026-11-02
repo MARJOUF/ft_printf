@@ -3,16 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_format_handel.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akmarjou <akmarjou@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: akmarjou <akmarjou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/31 11:08:32 by akmarjou          #+#    #+#             */
-/*   Updated: 2026/11/02 12:17:46 by akmarjou         ###   ########.fr       */
+/*   Updated: 2026/11/02 14:52:44 by akmarjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft.h"
 
+static int ft_nmbr_lowupp(const char *str, int i, va_list **arg)
+{
+    unsigned int c;
+    int count_nmbr;
+    char *st;
+
+    count_nmbr = 0;
+    if (str[i] == 'u')
+    {
+        c = va_arg(**arg, unsigned int);
+        st = ft_itoaf(c);
+        ft_putstr(st);
+        count_nmbr += ft_strlen(st);
+    }
+    return (count_nmbr);
+}
 static int ft_nmbr_address(const char *str, int i, va_list **arg)
 {
     int c;
@@ -56,22 +72,23 @@ static int ft_strchrstr(const char *str, int i, va_list **arg)
     {
         string = va_arg(**arg, char *);
         ft_putstr(string);
-        count += ft_strlen(string);
+        if (string != NULL)
+            count += ft_strlen(string);
     }
     return (count);
 }
 int    ft_format_handel(const char *str, int i, va_list *arg)
 {
     int c;
-    int count_str;
     int count_nmbr;
     int *a;
     
-    count_str = 0;
     count_nmbr = 0;
     if (str[i] == 'c' || str[i] == 's')
-        count_str += ft_strchrstr(str, i, &arg);
+        count_nmbr += ft_strchrstr(str, i, &arg);
     else if (str[i] == 'd' || str[i] == 'p' || str[i] == 'i')
         count_nmbr += ft_nmbr_address(str, i, &arg);
-    return (count_str + count_nmbr);
+    else if (str[i] == 'u')
+        count_nmbr +=  ft_nmbr_lowupp(str, i, &arg);
+    return (count_nmbr);
 }
