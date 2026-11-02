@@ -5,17 +5,17 @@ int main()
     char a = 'a';
     char *b = "akram454 45345 hello sdsdasd dasdas";
     int l = 234;
-    char *j = "hello";
-    char **d = &j;
+    char j = 'a';
+    char *d = &j;
     int count;
     int k = 1;
     // close(1);
     setvbuf(stdout, NULL, _IONBF, 0);
-    count = printf("%p %s %c %d\n",d, b, a, l);
+    count = printf("%s %c %d %p\n",b, a, l, d);
     printf("%d\n", count);
     dprintf(2, "%d\n", count);
     printf("\n");
-    count = ft_printf("%p %s %c %d\n",d, b, a, l);
+    count = ft_printf("%s %c %d %p\n",b, a, l, d);
     printf("%d\n", count);
 
     dprintf(2, "%d\n", count);

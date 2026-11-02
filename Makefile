@@ -10,7 +10,6 @@ $(NAME): $(OBJ)
 	ar rcs $(NAME) $(OBJ)
 
 %.o: %.c ft_printf.h
-	cd libft $(MAKE)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:

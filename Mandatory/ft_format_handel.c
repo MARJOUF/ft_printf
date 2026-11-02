@@ -6,7 +6,7 @@
 /*   By: akmarjou <akmarjou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/31 11:08:32 by akmarjou          #+#    #+#             */
-/*   Updated: 2026/11/01 18:52:03 by akmarjou         ###   ########.fr       */
+/*   Updated: 2026/11/02 12:17:46 by akmarjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,26 @@ static int ft_nmbr_address(const char *str, int i, va_list **arg)
 {
     int c;
     void *a;
+    char *st;
+    int base;
     int count_nmbr;
     
     count_nmbr = 0;
-    if (str[i] == 'd')
+    base = 0;
+    if (str[i] == 'd' || str[i] == 'i')
     {
         c = va_arg(**arg, int);
-        ft_putstr(ft_itoa(c));
-        count_nmbr += ft_strlen(ft_itoa(c));
+        st = ft_itoa(c);
+        ft_putstr(st);
+        count_nmbr += ft_strlen(st);
     }
     else if (str[i] == 'p')
     {
         a = va_arg(**arg, void *);
-        write(1, "0x", 2);
-        ft_base(a);
+        base += write(1, "0x", 2);
+        ft_base(a, &count_nmbr);
     }
-    return (count_nmbr + 15);
+    return (count_nmbr + base);
 }
 
 static int ft_strchrstr(const char *str, int i, va_list **arg)
