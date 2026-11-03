@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: akmarjou <akmarjou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/10/17 08:37:36 by akmarjou          #+#    #+#             */
-/*   Updated: 2026/10/30 15:42:44 by akmarjou         ###   ########.fr       */
+/*   Created: 2026/11/03 13:55:55 by akmarjou          #+#    #+#             */
+/*   Updated: 2026/11/03 13:56:32 by akmarjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
 static int	ft_calcul_integers(int n)
 {

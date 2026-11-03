@@ -1,1 +1,0 @@
-cc ft_printf.c ft_format_handel.c main.c libft.a

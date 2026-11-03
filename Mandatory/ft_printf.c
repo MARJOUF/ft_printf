@@ -6,7 +6,7 @@
 /*   By: akmarjou <akmarjou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/31 10:10:10 by akmarjou          #+#    #+#             */
-/*   Updated: 2026/11/01 19:19:07 by akmarjou         ###   ########.fr       */
+/*   Updated: 2026/11/03 14:24:07 by akmarjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int ft_printf(const char *str, ...)
             count += se; 
             i++;
         }
-        else
+        else 
         {
             se = ft_putchar(str[i]);
             if(se == -1)
