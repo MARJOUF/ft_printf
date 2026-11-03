@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   ft_itoaf.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akmarjou <akmarjou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/11/03 13:55:55 by akmarjou          #+#    #+#             */
-/*   Updated: 2026/11/03 13:56:32 by akmarjou         ###   ########.fr       */
+/*   Created: 2026/11/02 14:50:37 by akmarjou          #+#    #+#             */
+/*   Updated: 2026/11/03 20:50:54 by akmarjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_calcul_integers(int n)
+static unsigned int	ft_calcul_integers(unsigned int n)
 {
-	int	count;
+	unsigned int	count;
 
 	count = 0;
-	if (n == INT_MIN)
-	{
-		count += 1;
-		n = -147483648;
-	}
 	if (n < 0)
 	{
 		count += 1;
@@ -37,7 +32,8 @@ static int	ft_calcul_integers(int n)
 	return (count);
 }
 
-static char	*ft_fill_the_array(int n, int count_argument, char *argument)
+static char	*ft_fill_the_array(unsigned int n, unsigned int count_argument,
+		char *argument)
 {
 	while (n > 0)
 	{
@@ -48,20 +44,15 @@ static char	*ft_fill_the_array(int n, int count_argument, char *argument)
 	return (argument);
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoaf(unsigned int n)
 {
-	char	*argument;
-	int		count_argument;
+	char *argument;
+	unsigned int count_argument;
 
 	count_argument = ft_calcul_integers(n);
 	argument = malloc(count_argument + 1);
 	if (argument == NULL)
 		return (NULL);
-	if (n == INT_MIN)
-	{
-		argument[1] = '2';
-		n = -147483648;
-	}
 	if (n < 0)
 	{
 		argument[0] = '-';
