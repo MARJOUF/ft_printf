@@ -6,7 +6,7 @@
 /*   By: akmarjou <akmarjou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/01 15:50:35 by akmarjou          #+#    #+#             */
-/*   Updated: 2026/11/03 20:50:30 by akmarjou         ###   ########.fr       */
+/*   Updated: 2026/11/03 21:30:43 by akmarjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ void	ft_base(void *a, int *count)
 	base = "0123456789abcdef";
 	if (!a)
 	{
-		*count += ft_putstr("(nil)");
+		se = ft_putstr("(nil)");
+		if (se == -1)
+			return ;
+		*count += se;
 		return ;
 	}
 	p = (unsigned long)a;

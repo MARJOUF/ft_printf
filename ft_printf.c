@@ -6,11 +6,17 @@
 /*   By: akmarjou <akmarjou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 15:29:06 by akmarjou          #+#    #+#             */
-/*   Updated: 2026/11/03 20:54:46 by akmarjou         ###   ########.fr       */
+/*   Updated: 2026/11/03 21:31:30 by akmarjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+static int ft_chiqalwa(va_list *arg)
+{
+	va_end(*arg);
+	return (-1);
+}
 
 int	ft_printf(const char *format, ...)
 {
@@ -28,22 +34,15 @@ int	ft_printf(const char *format, ...)
 		if (format[i] == '%' && format[i + 1])
 		{
 			se = ft_format_handel(format, i + 1, &arg);
-			if (se == -1)
-				break ;
-			count += se;
 			i++;
 		}
 		else
-		{
 			se = ft_putchar(format[i]);
-			if (se == -1)
-				break ;
-			count += se;
-		}
+		if (se == -1)
+			return (ft_chiqalwa(&arg));
+		count += se;
 		i++;
 	}
 	va_end(arg);
-	if (se == -1)
-		return (-1);
 	return (count);
 }

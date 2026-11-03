@@ -1,22 +1,22 @@
-#include "ft_printf.h"
-#include <ctype.h>
-#include <fcntl.h>
-#include <limits.h>
-#include <signal.h>
-#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/resource.h>
+#include <ctype.h>
+#include <stdint.h>
+#include <limits.h>
+#include <signal.h>
+#include <fcntl.h>
 #include <unistd.h>
+#include <sys/resource.h>
+#include "ft_printf.h"
 
-int					main(int argc, char **argv);
+int	main(int argc, char **argv);
 
 #define BIG (1 << 20)
 #define MAXSHOW 4
 
-static int g_pass, g_fail, g_same, g_diff;
-static int g_verbose, g_info, g_gpass, g_gfail, g_shown;
+static int			g_pass, g_fail, g_same, g_diff;
+static int			g_verbose, g_info, g_gpass, g_gfail, g_shown;
 static const char	*g_gname;
 static char			g_ctx[512];
 static int			g_saved;
@@ -118,8 +118,8 @@ static void	group_end(void)
 	if (!g_gname)
 		return ;
 	if (g_gfail)
-		printf("[FAIL] %s (%d of %d cases failed)\n", g_gname, g_gfail, g_gpass
-			+ g_gfail);
+		printf("[FAIL] %s (%d of %d cases failed)\n", g_gname, g_gfail,
+			g_gpass + g_gfail);
 	else
 		printf("[PASS] %s (%d cases)\n", g_gname, g_gpass);
 	g_gname = NULL;
@@ -136,19 +136,11 @@ static void	group(const char *name)
 
 /* Calls ft_printf and printf with the same arguments, then compares
    the printed bytes AND the return value. */
-#define CHECKN(name, ...)                 \
-	do                                    \
-	{                                     \
-		size_t na_, nb_;                  \
-		int ra_, rb_;                     \
-		cap_start();                      \
-		ra_ = ft_printf(__VA_ARGS__);     \
-		na_ = cap_end(g_a);               \
-		cap_start();                      \
-		rb_ = printf(__VA_ARGS__);        \
-		nb_ = cap_end(g_b);               \
-		report(name, na_, nb_, ra_, rb_); \
-	} while (0)
+#define CHECKN(name, ...) do { \
+	size_t na_, nb_; int ra_, rb_; \
+	cap_start(); ra_ = ft_printf(__VA_ARGS__); na_ = cap_end(g_a); \
+	cap_start(); rb_ = printf(__VA_ARGS__); nb_ = cap_end(g_b); \
+	report(name, na_, nb_, ra_, rb_); } while (0)
 #define CHECK(...) CHECKN(#__VA_ARGS__, __VA_ARGS__)
 
 static void	section(const char *title)
@@ -182,16 +174,11 @@ static int	rint32(void)
 {
 	switch (rnd() % 6)
 	{
-	case 0:
-		return ((int)(rnd() % 20) - 10);
-	case 1:
-		return (INT_MAX - (int)(rnd() % 3));
-	case 2:
-		return (INT_MIN + (int)(rnd() % 3));
-	case 3:
-		return ((int)(rnd() % 100000) - 50000);
-	default:
-		return ((int)rnd());
+		case 0: return ((int)(rnd() % 20) - 10);
+		case 1: return (INT_MAX - (int)(rnd() % 3));
+		case 2: return (INT_MIN + (int)(rnd() % 3));
+		case 3: return ((int)(rnd() % 100000) - 50000);
+		default: return ((int)rnd());
 	}
 }
 
@@ -199,26 +186,19 @@ static void	*rptr(void)
 {
 	switch (rnd() % 7)
 	{
-	case 0:
-		return (NULL);
-	case 1:
-		return ((void *)(uintptr_t)(rnd() % 4096));
-	case 2:
-		return ((void *)&g_a[rnd() % 1000]);
-	case 3:
-		return (g_heap);
-	case 4:
-		return ((void *)main);
-	case 5:
-		return ((void *)(uintptr_t)rnd());
-	default:
-		return ((void *)(uintptr_t)(rnd() >> 16));
+		case 0: return (NULL);
+		case 1: return ((void *)(uintptr_t)(rnd() % 4096));
+		case 2: return ((void *)&g_a[rnd() % 1000]);
+		case 3: return (g_heap);
+		case 4: return ((void *)main);
+		case 5: return ((void *)(uintptr_t)rnd());
+		default: return ((void *)(uintptr_t)(rnd() >> 16));
 	}
 }
 
-static char			*g_strs[] = {NULL, "", "a", "hello", "%d", "%", "(null)",
-				"h\xc3\xa9llo", "\xff\xfe\x01", "line\nbreak\ttab",
-				"0123456789012345678901234567890123456789"};
+static char	*g_strs[] = {NULL, "", "a", "hello", "%d", "%", "(null)",
+	"h\xc3\xa9llo", "\xff\xfe\x01", "line\nbreak\ttab",
+	"0123456789012345678901234567890123456789"};
 
 /* ------------------------------------------------------------------ */
 /*  1. conversions, one by one                                        */
@@ -336,9 +316,9 @@ static void	test_numbers(void)
 
 static void	test_pointers(void)
 {
-	int		k;
-	int		i;
-	int		local;
+	int	k;
+	int	i;
+	int	local;
 	void	*pp;
 
 	group("%p edge cases");
@@ -379,8 +359,7 @@ static void	test_combinations(void)
 	CHECK("%p %X %x %u %i %d %s %c", (void *)6, 5u, 4u, 3u, 2, 1, "s", 'z');
 	CHECK("%s%s%s%s%s", "a", "b", "c", "d", "e");
 	CHECK("%d%d%d%d%d%d%d%d%d%d", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-	CHECK("%c%c%c%c%c%c%c%c%c%c", 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
-		'j');
+	CHECK("%c%c%c%c%c%c%c%c%c%c", 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j');
 	CHECK("%x%X%x%X%x%X%x%X", 10u, 11u, 12u, 13u, 14u, 15u, 16u, 17u);
 	CHECK("%d%s%d%s%d%s", INT_MIN, "", INT_MAX, (char *)NULL, 0, "x");
 	CHECK("%d is %i, %u is %x, %c%c%c", -5, 5, 5u, 255u, 'o', 'k', '!');
@@ -403,13 +382,13 @@ static void	test_combinations(void)
 static void	test_fuzz(int rounds)
 {
 	static const char	*spec[] = {"%c", "%s", "%d", "%i", "%u", "%x", "%X",
-			"%p", "%%"};
+		"%p", "%%"};
 	static const char	*lit[] = {"a", "-", " | ", "\n", "0x", "(null)", "12",
-			"  "};
+		"  "};
 	char				fmt[256];
 	intptr_t			a[8];
+	int					n, k, t, i;
 
-	int n, k, t, i;
 	group("fuzzer: random formats and values");
 	for (i = 0; i < rounds; i++)
 	{
@@ -448,8 +427,9 @@ static void	test_fuzz(int rounds)
 /* ------------------------------------------------------------------ */
 static void	test_leak(void)
 {
-	struct rusage r0, r1;
-	int saved, devnull, i;
+	struct rusage	r0, r1;
+	int				saved, devnull, i;
+
 	group_end();
 	fflush(stdout);
 	saved = dup(1);
@@ -487,10 +467,10 @@ static int	call_with_stdout(int fd)
 
 static void	test_write_errors(void)
 {
-	FILE	*f;
+	struct rlimit	old, lim;
+	int				p[2], r, fd;
+	FILE			*f;
 
-	struct rlimit old, lim;
-	int p[2], r, fd;
 	group_end();
 	r = call_with_stdout(-1);
 	verdict("stdout closed -> -1", r == -1, "");
@@ -563,9 +543,7 @@ int	main(int argc, char **argv)
 	test_undefined();
 	printf("\n== result: %d passed, %d failed ==\n", g_pass, g_fail);
 	printf("== undefined/unsupported: %d same as printf, %d differ"
-			" (informational) ==\n",
-			g_same,
-			g_diff);
+		" (informational) ==\n", g_same, g_diff);
 	free(g_heap);
 	return (g_fail != 0);
 }
