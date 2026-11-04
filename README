@@ -1,0 +1,129 @@
+*This project has been created as part of the 42 curriculum by akmarjou.*
+
+# ft_printf
+
+## Description
+
+**ft_printf** is a re-implementation of the C standard library function `printf`, packaged as a static library (`libftprintf.a`). The goal is to learn how variadic functions work (`<stdarg.h>`), how to parse a format string, and how to convert values (integers, unsigned integers, hexadecimal, pointers) to text without relying on the standard library formatting functions.
+
+### Supported conversions
+
+| Specifier | Description                                        |
+|-----------|----------------------------------------------------|
+| `%c`      | A single character                                 |
+| `%s`      | A string (prints `(null)` if the pointer is NULL)  |
+| `%p`      | A pointer in hexadecimal (prints `(nil)` if NULL)  |
+| `%d`/`%i` | A signed decimal integer                           |
+| `%u`      | An unsigned decimal integer                        |
+| `%x`      | An unsigned integer in lowercase hexadecimal       |
+| `%X`      | An unsigned integer in uppercase hexadecimal       |
+| `%%`      | A literal percent sign                             |
+
+`ft_printf` returns the number of characters printed, or `-1` if a `write` call fails.
+
+### Project structure
+
+| File                | Role                                                              |
+|---------------------|-------------------------------------------------------------------|
+| `ft_printf.c`       | Main function: loops over the format string, calls the handler    |
+| `ft_format_handel.c`| Dispatches each specifier to the right conversion routine         |
+| `ft_base.c`         | Hexadecimal output for pointers (`ft_base`) and `%x`/`%X` (`ft_base_x`) |
+| `ft_itoa.c`         | Converts a signed `int` to a string                               |
+| `ft_itoaf.c`        | Converts an `unsigned int` to a string                            |
+| `ft_putchar.c`, `ft_putstr.c`, `ft_strlen.c` | Basic output / helper functions          |
+| `ft_printf.h`       | Header with prototypes and includes                               |
+| `Makefile`          | Builds the library                                                |
+
+## Instructions
+
+### Compilation
+
+```bash
+make        # builds libftprintf.a
+make clean  # removes object files
+make fclean # removes object files and the library
+make re     # fclean + all
+```
+
+The code is compiled with `cc -Wall -Wextra -Werror`.
+
+### Usage
+
+Include the header in your code and link against the library:
+
+```c
+#include "ft_printf.h"
+
+int main(void)
+{
+	int n;
+
+	n = ft_printf("Hello %s! %d + %d = %i | hex: %x %X | ptr: %p | %%\n",
+			"42", 1, 2, 3, 255, 255, &n);
+	ft_printf("printed %d characters\n", n);
+	return (0);
+}
+```
+
+```bash
+cc -Wall -Wextra -Werror main.c libftprintf.a -o test
+./test
+```
+
+## Algorithm and data structures
+
+### Overview of the flow
+
+```mermaid
+flowchart TD
+    A["ft_printf<br/>va_start + loop on format"] --> B["Normal character<br/>ft_putchar"]
+    A --> C["Found percent sign<br/>ft_format_handel"]
+    C --> D["c, s<br/>ft_strchrstr"]
+    C --> E["d, i, p<br/>ft_nmbr_address"]
+    C --> F["u, x, X<br/>ft_nmbr_lowupp"]
+    D --> G["putchar, putstr<br/>write(1, ...)"]
+    E --> H["itoa, base<br/>int to text, pointer"]
+    F --> I["itoaf, base_x<br/>unsigned to text, hex"]
+```
+
+### Format string parsing
+
+`ft_printf` walks through the format string one character at a time with a single index `i`:
+
+- If the character is `%` and is followed by another character, the next character (the specifier) is passed to `ft_format_handel`, and the index is advanced past it.
+- Otherwise, the character is printed directly with `ft_putchar`.
+
+A counter accumulates the number of characters printed. After every output operation, the return value is checked: if it is `-1` (a failed `write`), `va_end` is called and `-1` is returned immediately.
+
+### Variadic arguments
+
+The `va_list` is created once in `ft_printf` and passed **by pointer** (`va_list *`) down to the handlers. This is important: the argument cursor must advance in the caller as well, so each `va_arg` call consumes the next argument for the following specifier. The specifiers are grouped into three small static functions (`ft_strchrstr`, `ft_nmbr_address`, `ft_nmbr_lowupp`) to respect the 42 Norm (max 25 lines per function), and `ft_format_handel` simply dispatches to the right group.
+
+### Number to string conversion (`%d`, `%i`, `%u`)
+
+- **Counting digits:** a first function computes how many characters the result needs (digits, plus one for the sign if negative, and one for `0`).
+- **Allocation:** `malloc(count + 1)` creates the exact-size buffer. A `char *` buffer was chosen because the string is then printed in a single `write` call, and its length gives the return count for free.
+- **Filling from the end:** digits are extracted with `n % 10` and `n / 10` and written from the last position backwards, so no reversal is needed.
+- **Edge cases:** `0` is handled separately, and `INT_MIN` is handled specially because `-INT_MIN` overflows an `int`. Its first digits are written manually and the rest is processed as a normal positive number.
+
+### Hexadecimal conversion (`%x`, `%X`, `%p`)
+
+A recursive approach is used. For a value `p`:
+
+1. If `p >= 16`, recurse with `p / 16` (this prints the more significant digits first).
+2. Then print `base[p % 16]`, where `base` is `"0123456789abcdef"` (or the uppercase version for `%X`).
+
+Recursion naturally produces the digits in the correct order without a buffer, so no allocation is needed. For `%p`, the pointer is cast to `unsigned long` (large enough to hold an address on 64-bit systems), `0x` is printed first, and a NULL pointer prints `(nil)`.
+
+## Resources
+
+### References
+
+- `man 3 printf`, `man 3 stdarg`, `man 2 write`
+- [Variadic functions in C (cppreference)](https://en.cppreference.com/w/c/variadic)
+- [Format specification of printf (cppreference)](https://en.cppreference.com/w/c/io/fprintf)
+- The 42 Norm (Norminette) documentation
+
+### Use of AI
+
+AI was used only to help me understand how variadic functions work (`va_list`, `va_start`, `va_arg`, `va_end`). All the code of the project was written by me.

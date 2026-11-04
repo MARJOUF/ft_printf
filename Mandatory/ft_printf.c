@@ -6,13 +6,13 @@
 /*   By: akmarjou <akmarjou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 15:29:06 by akmarjou          #+#    #+#             */
-/*   Updated: 2026/11/03 21:31:30 by akmarjou         ###   ########.fr       */
+/*   Updated: 2026/11/04 13:06:25 by akmarjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int ft_chiqalwa(va_list *arg)
+static int	ft_chiqalwa(va_list *arg)
 {
 	va_end(*arg);
 	return (-1);
@@ -20,10 +20,10 @@ static int ft_chiqalwa(va_list *arg)
 
 int	ft_printf(const char *format, ...)
 {
-	va_list arg;
-	int i;
-	int count;
-	int se;
+	va_list	arg;
+	int		i;
+	int		count;
+	int		se;
 
 	i = 0;
 	count = 0;

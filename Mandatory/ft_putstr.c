@@ -6,7 +6,7 @@
 /*   By: akmarjou <akmarjou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/01 18:43:22 by akmarjou          #+#    #+#             */
-/*   Updated: 2026/11/03 14:20:40 by akmarjou         ###   ########.fr       */
+/*   Updated: 2026/11/04 13:08:51 by akmarjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_putstr(char *s)
 {
-	size_t tool;
+	size_t	tool;
 
 	if (!s)
 		return (write(1, "(null)", 6));

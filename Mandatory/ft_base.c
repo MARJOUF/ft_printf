@@ -6,7 +6,7 @@
 /*   By: akmarjou <akmarjou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/01 15:50:35 by akmarjou          #+#    #+#             */
-/*   Updated: 2026/11/03 21:30:43 by akmarjou         ###   ########.fr       */
+/*   Updated: 2026/11/04 12:48:15 by akmarjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	ft_base(void *a, int *count)
 		return ;
 	*count += se;
 }
+
 void	ft_base_x(const char *str, int i, unsigned int p, int *count)
 {
 	char	*base;

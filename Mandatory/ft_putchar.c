@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akmarjou <akmarjou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/11/03 13:54:31 by akmarjou          #+#    #+#             */
-/*   Updated: 2026/11/03 13:54:52 by akmarjou         ###   ########.fr       */
+/*   Created: 2026/11/01 18:41:35 by akmarjou          #+#    #+#             */
+/*   Updated: 2026/11/04 13:07:01 by akmarjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-size_t	ft_strlen(const char *s)
+int	ft_putchar(char c)
 {
-	size_t i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
+	if (write(1, &c, 1) == -1)
+		return (-1);
+	return (1);
 }

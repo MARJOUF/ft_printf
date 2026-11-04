@@ -6,7 +6,7 @@
 /*   By: akmarjou <akmarjou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/31 11:08:32 by akmarjou          #+#    #+#             */
-/*   Updated: 2026/11/03 20:50:05 by akmarjou         ###   ########.fr       */
+/*   Updated: 2026/11/04 12:48:42 by akmarjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static int	ft_nmbr_lowupp(const char *str, int i, va_list **arg)
 	}
 	return (count_nmbr);
 }
+
 static int	ft_nmbr_address(const char *str, int i, va_list **arg)
 {
 	int		c;
@@ -80,6 +81,7 @@ static int	ft_strchrstr(const char *str, int i, va_list **arg)
 	}
 	return (count);
 }
+
 int	ft_format_handel(const char *str, int i, va_list *arg)
 {
 	int	count_nmbr;
