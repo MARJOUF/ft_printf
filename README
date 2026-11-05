@@ -72,20 +72,6 @@ cc -Wall -Wextra -Werror main.c libftprintf.a -o test
 
 ## Algorithm and data structures
 
-### Overview of the flow
-
-```mermaid
-flowchart TD
-    A["ft_printf<br/>va_start + loop on format"] --> B["Normal character<br/>ft_putchar"]
-    A --> C["Found percent sign<br/>ft_format_handel"]
-    C --> D["c, s<br/>ft_strchrstr"]
-    C --> E["d, i, p<br/>ft_nmbr_address"]
-    C --> F["u, x, X<br/>ft_nmbr_lowupp"]
-    D --> G["putchar, putstr<br/>write(1, ...)"]
-    E --> H["itoa, base<br/>int to text, pointer"]
-    F --> I["itoaf, base_x<br/>unsigned to text, hex"]
-```
-
 ### Format string parsing
 
 `ft_printf` walks through the format string one character at a time with a single index `i`:

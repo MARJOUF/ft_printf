@@ -6,13 +6,13 @@
 /*   By: akmarjou <akmarjou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 15:29:06 by akmarjou          #+#    #+#             */
-/*   Updated: 2026/11/04 13:06:25 by akmarjou         ###   ########.fr       */
+/*   Updated: 2026/11/04 17:57:25 by akmarjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_chiqalwa(va_list *arg)
+static int	ft_error(va_list *arg)
 {
 	va_end(*arg);
 	return (-1);
@@ -39,7 +39,7 @@ int	ft_printf(const char *format, ...)
 		else
 			se = ft_putchar(format[i]);
 		if (se == -1)
-			return (ft_chiqalwa(&arg));
+			return (ft_error(&arg));
 		count += se;
 		i++;
 	}
