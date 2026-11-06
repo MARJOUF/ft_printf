@@ -6,7 +6,7 @@
 /*   By: akmarjou <akmarjou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/01 18:43:22 by akmarjou          #+#    #+#             */
-/*   Updated: 2026/11/05 14:51:07 by akmarjou         ###   ########.fr       */
+/*   Updated: 2026/11/06 10:15:40 by akmarjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,15 @@ int	ft_putstr(char *s)
 	return (tool);
 }
 
-void ft_putspace(int c)
+int ft_putspace(int c)
 {
+	int s;
+	
 	while (c > 0)
 	{
-		ft_putchar(' ');
+		s = ft_putchar(' ');
+		if (s == -1)
+			return (-1);
 		c--;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: akmarjou <akmarjou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 20:34:34 by akmarjou          #+#    #+#             */
-/*   Updated: 2026/11/05 15:07:06 by akmarjou         ###   ########.fr       */
+/*   Updated: 2026/11/06 10:12:46 by akmarjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,30 @@ static int ft_error(va_list *arg)
     return (-1);
 }
 
-int ft_printf_bonus(const char *format, ...)
+int	ft_printf(const char *format, ...)
 {
-    va_list arg;
-    int i;
-    int se;
-    int count;
+	va_list	arg;
+	int		i;
+	int		count;
+	int		se;
 
-    count = 0;
-    i = 0;
-    va_start(arg, format);
-    while (format[i] != '%' && format[i + 1])
-    {
-        count += ft_putchar(format[i]);
-        i++;
-    }
-    while (format[i] == '%' && format[i + 1])
-    {
-        se = ft_read_format(format, i + 1, &arg);
-        i++;
-    }
-    if (se == -1)
-        return (ft_error(&arg));
-    count += se;
-    return (count);
+	i = 0;
+	count = 0;
+	va_start(arg, format);
+	while (format[i])
+	{
+		if (format[i] == '%' && format[i + 1])
+		{
+			i++;
+			se = ft_read_format(format, &i, &arg);
+		}
+		else
+			se = ft_putchar(format[i]);
+		if (se == -1)
+			return (ft_error(&arg));
+		count += se;
+		i++;
+	}
+	va_end(arg);
+	return (count);
 }
