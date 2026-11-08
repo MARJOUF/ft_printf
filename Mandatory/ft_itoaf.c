@@ -6,7 +6,7 @@
 /*   By: akmarjou <akmarjou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/02 14:50:37 by akmarjou          #+#    #+#             */
-/*   Updated: 2026/11/04 13:09:19 by akmarjou         ###   ########.fr       */
+/*   Updated: 2026/11/08 14:04:26 by akmarjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,6 @@ static unsigned int	ft_calcul_integers(unsigned int n)
 	unsigned int	count;
 
 	count = 0;
-	if (n < 0)
-	{
-		count += 1;
-		n *= -1;
-	}
 	if (n == 0)
 		count += 1;
 	while (n > 0)
@@ -53,11 +48,6 @@ char	*ft_itoaf(unsigned int n)
 	argument = malloc(count_argument + 1);
 	if (argument == NULL)
 		return (NULL);
-	if (n < 0)
-	{
-		argument[0] = '-';
-		n *= -1;
-	}
 	if (n == 0)
 		argument[0] = '0';
 	argument[count_argument--] = '\0';

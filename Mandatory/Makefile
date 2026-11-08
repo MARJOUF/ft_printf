@@ -1,9 +1,11 @@
 NAME = libftprintf.a
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-CRS = ft_ato_bonus.c ft_format_bonus.c ft_itoa.c\
-	ft_printf_bonus.c ft_putchar.c ft_putstr.c\
-	ft_read_flags.c ft_read_format.c
+HEADER = ft_printf.h
+CRS = ft_printf.c ft_base.c ft_format_handel.c \
+	ft_itoa.c ft_itoaf.c \
+	ft_putchar.c ft_putstr.c \
+	ft_strlen.c
 
 OBJ = $(CRS:.c=.o)
 
@@ -12,7 +14,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	ar rcs $(NAME) $(OBJ)
 
-%.o: %.c ft_printf_bonus.h
+%.o: %.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
