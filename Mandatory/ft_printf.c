@@ -6,7 +6,7 @@
 /*   By: akmarjou <akmarjou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/03 15:29:06 by akmarjou          #+#    #+#             */
-/*   Updated: 2026/11/08 14:26:29 by akmarjou         ###   ########.fr       */
+/*   Updated: 2026/11/09 14:14:41 by akmarjou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ static int	ft_error(va_list arg)
 	return (-1);
 }
 
-static int ft_read_format(const char *format, va_list arg)
+static int	ft_read_format(const char *format, va_list arg)
 {
 	int		i;
 	int		count;
 	int		se;
-	
+
 	i = 0;
 	count = 0;
 	se = 0;
